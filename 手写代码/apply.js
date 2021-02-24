@@ -1,19 +1,9 @@
-//apply和call的区别在于传递的参数是数组
-Function.prototype.apply = function (context, array) {
-  context = context ? Object(context) : window;
+//apply和call的区别在于：apply接收的参数是数组
+Function.prototype.myApply = function (context, args) {
+  const fn = Symbol('fn');//用Symbol是为了防止覆盖self上的方法
+  context = context || window;
   context.fn = this;
-
-  let result;
-  if (!array) {
-    context.fn();
-  }else{
-    let args = [];
-    for (let i = 1; i < arr.length; i++) {
-      args.push('arr[' + i + ']');
-    }
-    result = eval('context.fn(' + args + ')');
-  }
-  
-  delete context.fn;
-  return result;
+  let result = eval('context.fn(...args)');
+  delete context.fn;//删除声明的fn属性
+  return result;//返回执行结果
 }
