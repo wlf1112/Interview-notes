@@ -1,5 +1,4 @@
 Array.prototype.map=function(callbackFn,thisArg){
-  debugger;
   //处理数组类型异常
   if(this===null||this===undefined){
     throw new TypeError("Cannot read property 'map' of null or undefined");
