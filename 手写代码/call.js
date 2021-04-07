@@ -25,4 +25,3 @@ Function.prototype.myCall = function (context, ...args) {
   delete context[fn] //删除声明的fn属性
   return result
 }
-

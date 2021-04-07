@@ -1,11 +1,12 @@
 //借助call  
 //问题：父类原型对象中存在方法，子类无法继承
-function Parent1(){
-  this.name='parent1';
+function Parent1() {
+  this.name = 'parent1';
 }
-function Child1(){
+
+function Child1() {
   Parent1.call(this);
-  this.type='child1';
+  this.type = 'child1';
 }
 console.log(new Child1())
 
@@ -14,6 +15,7 @@ function Parent2() {
   this.name = 'parent2';
   this.play = [1, 2, 3]
 }
+
 function Child2() {
   this.type = 'child2';
 }
@@ -31,9 +33,9 @@ function Parent3() {
   this.play = [1, 2, 3]
 }
 
-function Child3(){
+function Child3() {
   Parent3.call(this);
-  this.type='child3';
+  this.type = 'child3';
 }
 
 Child3.prototype = new Parent3();
@@ -45,12 +47,12 @@ function Parent4() {
   this.play = [1, 2, 3]
 }
 
-function Child4(){
+function Child4() {
   Parent4.call(this);
-  this.type='child4';
+  this.type = 'child4';
 }
 
-Child4.prototype=Parent4.prototype
+Child4.prototype = Parent4.prototype
 console.log(new Child4())
 
 //寄生组合继承
@@ -59,12 +61,12 @@ function Parent5() {
   this.play = [1, 2, 3]
 }
 
-function Child5(){
+function Child5() {
   Parent5.call(this);
-  this.type='child5';
+  this.type = 'child5';
 }
 
-Child5.prototype=Object.create(Parent5.prototype);
-Child5.prototype.constructor=Child5;
+Child5.prototype = Object.create(Parent5.prototype);
+Child5.prototype.constructor = Child5;
 
 console.log(new Child5())

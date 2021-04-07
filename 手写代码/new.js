@@ -16,7 +16,9 @@ function myNew() {
 function Animal(type) {
   this.type = type;
   //如果当前构造函数返回的是一个引用类型，需要把这个对象（或者函数）返回
-  return {name:'jw'}
+  return {
+    name: 'jw'
+  }
 }
 Animal.prototype.say = function () {
   console.log("say");

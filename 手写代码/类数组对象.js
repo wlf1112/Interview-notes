@@ -11,7 +11,7 @@ function sum(a, b) {
   console.log(args.reduce((sum, cur) => sum + cur));
 }
 
-sum(1,2);
+sum(1, 2);
 
 //方法2：Array.from()
 function sum(a, b) {
@@ -19,7 +19,7 @@ function sum(a, b) {
   console.log(args.reduce((sum, cur) => sum + cur));
 }
 
-sum(1,2);
+sum(1, 2);
 
 //方法3：ES6展开运算符
 function sum(a, b) {
@@ -27,12 +27,12 @@ function sum(a, b) {
   console.log(args.reduce((sum, cur) => sum + cur));
 }
 
-sum(1,2);
+sum(1, 2);
 
 //方法4：利用concat+apply
 function sum(a, b) {
-  let args = Array.prototype.concat.apply([],arguments);//apply方法会把第二个参数展开
+  let args = Array.prototype.concat.apply([], arguments); //apply方法会把第二个参数展开
   console.log(args.reduce((sum, cur) => sum + cur));
 }
 
-sum(1,2);
+sum(1, 2);

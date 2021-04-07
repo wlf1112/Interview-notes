@@ -20,7 +20,8 @@
     let countOfRender = 0;
     const ele = document.querySelector('ul');
     //添加的数据的方法
-    function add(){
+    function add()
+    {
       const fragment = document.createDocumentFragment();
       for (let i = 0; i < once; i++) {
         const li = document.createElement('li');
@@ -31,7 +32,8 @@
       countOfRender += 1;
       loop();
     }
-    function loop(){
+    function loop()
+    {
       if (countOfRender < loopCount) {
         window.requestAnimationFrame(add);
       }
