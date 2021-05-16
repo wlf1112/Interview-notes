@@ -7,7 +7,7 @@ Function.prototype.myBind = function (context) {
   }
   //this执行调用bind的函数
   let that = this
-  //获取myBind函数从第二个参数到最后一个参数
+  //将参数拆解为数组，获取myBind函数从第二个参数到最后一个参数
   let bindArgs = Array.prototype.slice.call(arguments, 1)
   //Object.creat原理
   function Fn() {}
