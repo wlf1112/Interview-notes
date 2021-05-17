@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件代理</title>
+  <style>
+    #div1 a {
+      display: inline-block;
+      width: 100%
+    }
+  </style>
+</head>
+
+<body>
+  <div id="div1">
+    <a href="#">a1</a>
+    <a href="#">a2</a>
+    <a href="#">a3</a>
+    <a href="#">a4</a>
+    <button>点击增加一个a标签</button>
+  </div>
+
+  <script>
+    const div1 = document.getElementById('div1')
+
+    function bindEvent(elem, type, fn)
+    {
+      elem.addEventListener(type, fn)
+    }
+
+    bindEvent(div1, 'click', e =>
+    {
+      e.preventDefault()
+      const target = e.target
+      if (target.nodeName === 'A') {
+        alert(target.innerHTML)
+      }
+    })
+  </script>
+</body>
+
+</html>
