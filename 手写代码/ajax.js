@@ -27,7 +27,7 @@ function ajax(url) {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          resolve(JSON.parse(xhr.reponseText))
+          resolve(JSON.parse(xhr.responseText))
         } else if (xhr.status === 404) {
           reject(
             new Error('404 not found')
@@ -40,8 +40,9 @@ function ajax(url) {
   return p
 }
 
-ajax('/test.json').then((val) => {
-  console.log(val);
-}).catch((err) => {
+const url = '/test.json';
+ajax(url).then(res => {
+  console.log(res)
+}).catch(err => {
   console.error(err)
 })
