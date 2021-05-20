@@ -1,72 +1,129 @@
-//借助call  
-//问题：父类原型对象中存在方法，子类无法继承
-function Parent1() {
-  this.name = 'parent1';
+/**
+ * 借助原型链实现继承，缺点：引用类型被所有实例共享
+ */
+function Parent() {
+  this.name = 'kevin'
+  this.type = [1, 2, 3, 4]
 }
 
-function Child1() {
-  Parent1.call(this);
-  this.type = 'child1';
-}
-console.log(new Child1())
-
-//借助原型链
-function Parent2() {
-  this.name = 'parent2';
-  this.play = [1, 2, 3]
+Parent.prototype.getName = function () {
+  console.log(this.name)
 }
 
-function Child2() {
-  this.type = 'child2';
-}
-Child2.prototype = new Parent2();
+function Child() {
 
-var s1 = new Child2();
-var s2 = new Child2();
-
-s1.play.push(4);
-console.log(s1.play, s2.play);
-
-//将上面两种组合  parent的构造函数会多执行一次
-function Parent3() {
-  this.name = 'parent3';
-  this.play = [1, 2, 3]
 }
 
-function Child3() {
-  Parent3.call(this);
-  this.type = 'child3';
+Child.prototype = new Parent()
+var child1 = new Child()
+child1.type.push(5)
+console.log(child1.type)
+var child2 = new Child()
+console.log(child2.type)
+
+/**
+ * 借助call实现继承，缺点：方法在构造函数中定义，每次创建实例都会创建一遍方法；
+ *                        继承不了父级原型上的函数
+ */
+function Parent() {
+  this.type = [1, 2, 3, 4]
 }
 
-Child3.prototype = new Parent3();
-console.log(new Child3())
-
-//组合继承的优化  子类实例的构造函数是Parent4
-function Parent4() {
-  this.name = 'parent4';
-  this.play = [1, 2, 3]
+Parent.prototype.sayName = function () {
+  console.log(`${this.name} say`);
 }
 
-function Child4() {
-  Parent4.call(this);
-  this.type = 'child4';
+function Child() {
+  Parent.call(this)
 }
 
-Child4.prototype = Parent4.prototype
-console.log(new Child4())
+var child = new Child()
+child.type.push(5)
+console.log(child);
 
-//寄生组合继承
-function Parent5() {
-  this.name = 'parent5';
-  this.play = [1, 2, 3]
+var child1 = new Child()
+console.log(child1);
+
+/**
+ * 组合继承（结合原型链和call）缺点：会调用两次构造函数
+ */
+function Parent() {
+  this.name = 'parent'
+  this.type = [1, 2, 3, 4]
 }
 
-function Child5() {
-  Parent5.call(this);
-  this.type = 'child5';
+Parent.prototype.sayName = function () {
+  console.log(`${this.name} say`);
 }
 
-Child5.prototype = Object.create(Parent5.prototype);
-Child5.prototype.constructor = Child5;
+function Child() {
+  Parent.call(this)
+}
 
-console.log(new Child5())
+Child.prototype = new Parent()
+
+var child1 = new Child()
+child1.type.push(5)
+console.log(child1.type);
+console.log(child1);
+console.log(child1.sayName());
+
+var child2 = new Child()
+console.log(child2.type);
+console.log(child2);
+console.log(child2.sayName());
+
+
+/**
+ * 原型式继承：包含引用类型的属性值会共享
+ */
+function createObj(o) {
+  function F() {
+
+  }
+  F.prototype = o
+  return new F()
+}
+
+var person = {
+  name: 'kevin',
+  friends: ['daisy', 'candy']
+}
+
+var person1 = createObj(person)
+var person2 = createObj(person)
+
+person1.name = 'person1'
+console.log(person1)
+console.log(person2)
+
+person1.friends.push('taylor')
+console.log(person2.friends);
+console.log(person1.friends);
+
+
+/**
+ * 寄生组合式继承
+ */
+function Parent(name) {
+  this.name = name
+  this.colors = ['red', 'blue', 'green']
+}
+
+Parent.prototype.getName = function () {
+  console.log(this.name);
+}
+
+function Child(name, age) {
+  Parent.call(this, name)
+  this.age = age
+}
+
+var F = function () {}
+
+F.prototype = Parent.prototype
+
+Child.prototype = new F()
+
+var child1 = new Child('kevin', '18')
+console.log(child1);
