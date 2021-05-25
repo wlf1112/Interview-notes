@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>deferred</title>
+</head>
+
+<body>
+  <p>deferred test</p>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+  <script>
+    function waitHandle()
+    {
+      //定义
+      var dtd = $.Deferred()
+
+      var wait = function (dtd)
+      {
+        var task = function ()
+        {
+          console.log('执行完成');
+          //成功
+          dtd.resolve()
+          //失败
+          dtd.reject()
+        }
+        setTimeout(task, 2000);
+        //wait返回
+        return dtd.promise()
+      }
+      //最终返回
+      return wait(dtd)
+    }
+
+    var w = waitHandle()  //promise对象
+    $.when(w).then(function ()
+    {
+      console.log('ok 1');
+    }, function ()
+    {
+      console.log('err 1');
+    })
+
+  </script>
+</body>
+
+</html>
