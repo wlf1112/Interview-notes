@@ -26,7 +26,7 @@ function bindEvent(elem, type, selector, fn) {
 
 const a = document.getElementById('link1')
 bindEvent(a, 'click', event => {
-  //console.log(e.target) //获取触发的元素
-  e.preventDefault() //阻止默认行为
+  //console.log(event.target) //获取触发的元素
+  event.preventDefault() //阻止默认行为
   alert('click')
 })
