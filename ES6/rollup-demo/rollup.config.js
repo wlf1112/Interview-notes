@@ -3,12 +3,14 @@ import resolve from 'rollup-plugin-node-resolve'
 
 export default {
   input: 'src/index.js',
-  format: 'umd',
   plugins: [
     resolve(),
     babel({
       exclude: 'node_modules/**'
     })
   ],
-  dest: 'build/bundle.js'
+  output: {
+    file: 'build/bundle.js',
+    format: 'umd'
+  }
 }
