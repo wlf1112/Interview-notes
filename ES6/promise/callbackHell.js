@@ -9,9 +9,9 @@ function loadImg(src, callback, fail) {
   img.src = src
 }
 
-var src = 'http://www.imooc.com/static/img/index/logo_new.png'
+var src = 'https://www.imooc.com/static/img/index/logo2020.png'
 loadImg(src, function (img) {
-  console.log(img.width);
+  console.log(img.width)
 }, function () {
-  console.log('failed');
+  console.log('failed')
 })

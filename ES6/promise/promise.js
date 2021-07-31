@@ -1,6 +1,6 @@
 function loadImg(src) {
   const promise = new Promise(function (resolve, reject) {
-    var img = document.createElement('img')
+    const img = document.createElement('img')
     img.onload = function () {
       resolve(img)
     }
@@ -12,15 +12,15 @@ function loadImg(src) {
   return promise
 }
 
-var src = 'http://www.imooc.com/static/img/index/logo_new.png'
-var result = loadImg(src)
 
+var src = 'https://www.imooc.com/static/img/index/logo2020.png'
+var result = loadImg(src)
 result.then(function (img) {
-  console.log(img.width);
+  console.log(img.width)
 }, function () {
-  console.log('failed');
+  console.log('fail')
 })
 
 result.then(function (img) {
-  console.log(img.height);
+  console.log(img.height)
 })
