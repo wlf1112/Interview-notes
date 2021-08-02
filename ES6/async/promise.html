@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- 不支持promise的浏览器可以引入bluebird -->
+  <!-- <script src="https://cdn.bootcdn.net/ajax/libs/bluebird/3.7.2/bluebird.js"></script> -->
+</head>
+
+<body>
+  <p>promise test</p>
+  <script type="text/javascript">
+    function loadImg(src)
+    {
+      var promise = new Promise(function (resolve, reject)
+      {
+        var img = document.createElement('img')
+        // throw new Error('自定义错误')  //表示语法报错，逻辑外
+        img.onload = function ()
+        {
+          resolve(img)
+        }
+        img.onerror = function ()
+        {
+          reject('图片加载失败')
+        }
+        img.src = src
+      })
+      return promise
+    }
+
+    var src = 'https://1www.imooc.com/static/img/index/logo2020.png'
+    var result = loadImg(src)
+    // result.then(function (img)
+    // {
+    //   console.log(img.height)
+    //   return img
+    // }, function ()
+    // {
+    //   console.log('error 1');
+    // }).then(function (img)
+    // {
+    //   console.log(img.width);
+    // })
+
+    //异常捕获
+    result.then(function (img)
+    {
+      console.log(img.height)
+      return img
+    }).then(function (img)
+    {
+      console.log(img.width)
+    }).catch(function (ex)
+    {
+      console.log(ex)
+    })
+  </script>
+</body>
+
+</html>

@@ -10,18 +10,8 @@
 </head>
 
 <body>
-  <p>deferred test</p>
+  <p>deferred promise test</p>
   <script type="text/javascript">
-    // var wait = function ()
-    // {
-    //   var task = function ()
-    //   {
-    //     console.log('执行完成');
-    //   }
-    //   setTimeout(task, 2000);
-    // }
-    // wait()
-
     function waitHandler()
     {
       var dtd = $.Deferred()
@@ -35,29 +25,20 @@
           //dtd.reject()
         }
         setTimeout(task, 2000)
-        return dtd
+        return dtd.promise()
       }
 
       return wait(dtd)
     }
 
-    var w = waitHandler()
-    w.then(function ()
+    var w = waitHandler()  // promise对象
+    $.when(w).then(function ()
     {
       console.log('ok 1')
     }, function ()
     {
       console.log('error 1')
     })
-    w.then(function ()
-    {
-      console.log('ok 2')
-    }, function ()
-    {
-      console.log('error 2')
-    })
-
-    // 开放封闭原则！！
 
   </script>
 </body>
