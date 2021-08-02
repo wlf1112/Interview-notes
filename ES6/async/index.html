@@ -11,16 +11,80 @@
 
 <body>
   <script type="text/javascript">
-    console.log(100)
-    $.ajax({
-      url: './data.json',
-      success: function (result)
-      {
-        console.log(result)
-      }
-    })
-    console.log(200)
-    console.log(300)
+    // console.log(100)
+    // $.ajax({
+    //   url: './data.json',
+    //   success: function (result)
+    //   {
+    //     console.log(result)
+    //   }
+    // })
+    // console.log(200)
+    // console.log(300)
+
+    //异步demo
+    // $.ajax({
+    //   url: './data.json',
+    //   success: function (result)
+    //   {
+    //     console.log('a')
+    //   }
+    // })
+    // setTimeout(() =>
+    // {
+    //   console.log('b')
+    // }, 100);
+
+    // setTimeout(() =>
+    // {
+    //   console.log('c')
+    // });
+    // console.log('d');
+
+    // $.ajax({
+    //   url: './data.json',
+    //   success: function ()
+    //   {
+    //     console.log('success1')
+    //     console.log('success2')
+    //     console.log('success3')
+    //   },
+    //   error: function ()
+    //   {
+    //     console.log('error')
+    //   }
+    // })
+
+    // var ajax = $.ajax('./data.json')
+    // ajax.done(function ()
+    // {
+    //   console.log('success 1')
+    // }).fail(function ()
+    // {
+    //   console.log('fail 1')
+    // }).done(function ()
+    // {
+    //   console.log('success 2')
+    // })
+
+    // console.log(ajax)
+
+    // var ajax = $.ajax('./data.json')
+    // ajax.then(function ()
+    // {
+    //   console.log('success 1')
+    // }, function ()
+    // {
+    //   console.log('fail 1')
+    // }).then(function ()
+    // {
+    //   console.log('success 2')
+    // }, function ()
+    // {
+    //   console.log('fail 2')
+    // })
+
+
   </script>
 </body>
 
