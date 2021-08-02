@@ -6,24 +6,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script type="text/javascript" src="./jquery-3.2.1.min.js"></script>
 </head>
 
 <body>
-  <p>zepto test 1</p>
-  <p>zepto test 2</p>
-  <p>zepto test 3</p>
+  <p>jquery test 1</p>
+  <p>jquery test 2</p>
+  <p>jquery test 3</p>
 
   <div id="div1">
-    <p>zepto test in div</p>
+    <p>jquery test in div</p>
   </div>
-  <script src="my-zepto.js"></script>
-  <script>
+
+  <script type="text/javascript">
     var $p = $('p')
-    $p.css('font-size', '40px')
+    $p.css("font-size", "40px")
     alert($p.html())
 
-    var $div1 = $('#div1')
-    $div1.css('color', 'blue')
+    var $div1 = $("#div1")
+    $div1.css("color", "blue")
     alert($div1.html())
   </script>
 </body>
