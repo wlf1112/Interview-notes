@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jquery vdom</title>
+  <script type="text/javascript" src="./jquery-3.2.1.js"></script>
+</head>
+
+<body>
+  <div id="container"></div>
+  <button onclick="btnChange()">change</button>
+  <script>
+    var data = [
+      {
+        name: '张三',
+        age: '12',
+        address: '上海'
+      },
+      {
+        name: '李四',
+        age: '18',
+        address: '北京'
+      },
+      {
+        name: '王五',
+        age: '20',
+        address: '深圳'
+      }
+    ]
+
+    function renderData(data)
+    {
+      var $container = $('#container')
+
+      $('#container').html('')
+
+      var $table = $('<table>')
+      $table.append($('<tr><td>name</td><td>age</td><td>address</td></tr>'))
+      data.forEach(function (item)
+      {
+        $table.append($('<tr><td>' + item.name + '</td><td>' + item.age + '</td><td>' + item.address + '</td></tr>'))
+      })
+
+      $('#container').append($table)
+    }
+
+    function btnChange()
+    {
+      data[0].age = 30
+      data[2].address = '成都'
+      renderData(data)
+    }
+
+    renderData(data)
+  </script>
+</body>
+
+</html>
