@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>snabbdom demo</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/snabbdom/0.7.2/snabbdom.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/snabbdom/0.7.2/snabbdom-style.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/snabbdom/0.7.2/snabbdom-props.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/snabbdom/0.7.2/snabbdom-eventlisteners.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/snabbdom/0.7.2/snabbdom-class.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/snabbdom/0.7.2/h.js"></script>
+</head>
+
+<body>
+  <div id="container"></div>
+  <button id="btn-change">change</button>
+  <script type="text/javascript">
+    var snabbdom = window.snabbdom,
+      patch = snabbdom.init([
+        snabbdom_class,
+        snabbdom_style,
+        snabbdom_props,
+        snabbdom_eventlisteners
+      ]),
+      h = snabbdom.h;
+
+    var container = document.getElementById('container'),
+      btnChange = document.getElementById('btn-change');
+    var vnode = h('ul', {}, [
+      h('li.item', {}, 'Item1'),
+      h('li.item', {}, 'Item2')
+    ])
+    patch(container, vnode)
+
+
+    var newVnode = h('ul', {}, [
+      h('li.item', {}, 'Item1'),
+      h('li.item', {}, 'Item2B'),
+      h('li.item', {}, 'Item3')
+    ])
+
+    btnChange.addEventListener('click', function ()
+    {
+      patch(vnode, newVnode)
+    })
+
+
+  </script>
+</body>
+
+</html>
