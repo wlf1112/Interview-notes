@@ -8,9 +8,13 @@ var selectSort=function(arr){
             if(arr[j]<min){
                 let c=min;
                 min=arr[j];
-                
+                arr[j]=c;
             }
         }
+        arr[i]=min; 
     }
     return arr;
 }
+
+//测试
+selectSort([12,6,7,2,3,17,11])
