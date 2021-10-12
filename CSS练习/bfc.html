@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFC</title>
+    <style>
+        .container{
+            background:#f1f1f1;
+        }
+        .container img{
+            width:200px;
+            height:200px;
+        }
+        .left{
+            float:left;
+        }
+        .bfc{
+            overflow:hidden; /* 触发元素bfc */
+        }
+    </style>
+</head>
+<body>
+    <div class="container bfc">
+        <img src="https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF" class="left">
+        <p class="bfc">某一段文字...</p>
+    </div>
+</body>
+</html>

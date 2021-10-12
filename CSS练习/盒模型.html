@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #div1{
+            height:100px;
+            width:100px;
+            border:1px solid #ccc;
+            padding:10px;
+            margin:20px;
+        }
+    </style>
+</head>
+<body>
+    <!--获取div1的offsetWidth值-->
+    <div id="div1">
+    </div>
+    <script type="text/javascript">
+        //IE盒模型结果为100px
+        //标准盒模型结果为122px
+        console.log(document.getElementById('div1').offsetWidth) 
+        /**
+         * 盒模型分为标准盒模型和IE盒模型
+         * 
+         * 1.标准盒模型：CSS是设置的宽高是盒子内容区的宽高  box-sizing:content-box
+         * 2.IE盒模型：CSS设置的宽高是盒子的真实宽高（包含内边距、边框和内容区）  box-sizing:border-box
+         * 
+         * IE盒模型的优点：不论内边距和边框如何改变，盒子的真实宽高都不会改变
+        */
+    </script>
+</body>
+</html>
