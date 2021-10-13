@@ -7,15 +7,14 @@
     <title>圣杯布局</title>
     <style>
         body{
-            min-width:550px;
+            min-width:550px;  /* 2*left+right */
         }
         #header{
             text-align: center;
             background-color: #f1f1f1;
         }
         #container{
-            padding-left:200px;
-            padding-right:150px;
+            padding:0 150px 0 200px;
         }
         #container .column{
             float:left;
@@ -29,7 +28,7 @@
             background-color: yellow;
             width:200px;
             margin-left:-100%;
-            right:200px;
+            left:-200px;
         }
         #right{
             background-color: red;

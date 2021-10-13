@@ -36,9 +36,12 @@ console.log(typeof {});             //object
 console.log(typeof undefined);      //undefined
 console.log(typeof null);           //object
 
+const s =Symbol('s');
+console.log(typeof s);              //symbol
+
 ```
 
-### instanceof
+#### instanceof
 
 - instanceof用来判断对象的类型，不能判断基本数据类型
 - 内部运行机制：判断在原型链中能否找到该类型的原型，如果能找到，返回true
@@ -53,7 +56,8 @@ console.log({} instanceof Object);               //true
 
 ```
 
-### constructor
+
+#### constructor
 
 - 判断数据类型，可以用来判断基本数据类型
 - 对象实例可以通过constructor对象访问它的构造函数
@@ -69,7 +73,7 @@ console.log(({}).constructor===Object);                 //true
 
 ```
 
-### Object.prototype.toString.call()
+#### Object.prototype.toString.call()
 
 - Object.prototype.toString.call()可以得到对象的具体类型
 
@@ -92,20 +96,51 @@ console.log(a.call({}));                    //'[object Object]'
     1. 按值传递的类型，复制一份存入栈内存，一般不会占用太多内存，保证了访问速度
     2. 按引用传递的类型，复制其引用，不是整个复制值，保证了过大的对象不会因为不停复制内容造成内存浪费
 
+值类型用图表示：
+![](https://s3.bmp.ovh/imgs/2021/10/e2a9073c3d8d13e4.png)
+
+引用类型用图表示：
+![](https://s3.bmp.ovh/imgs/2021/10/23fd7e559abc44b0.png)
+
+### 类型转换
+
+#### 字符串拼接
+
+#### ==
+
+除了==null外，其他都一律用===
+
+#### if语句和逻辑判断
+
+- truly变量：!!a===true的变量
+- falsely变量：!!a===false的变量 (0、NaN、''、null、undefined、false)
+  
+逻辑判断：例如 10||0 ，可以理解为 truely变量||falsy变量 ，短路输出10
+
 ## 原型
 
 protype在规范中的定义是：给其它对象提供共享属性的对象
 
-- 所有的引用类型（数组、对象、函数），都具有对象特性，可以自由扩展属性（null除外）
-- 所有的引用类型（数组、对象、函数），都具有__proto__属性，属性值是一个普通的对象
-- 所有的函数，都有一个prototype属性，属性值也是一个普通的对象
-- 所有的引用类型（数组、对象、函数），__proto__属性指向它的构造函数的prototype属性值
-
-当试图得到一个对象的某个属性时，如果这个对象本身没有这个属性，那么会去它的__proro__（即它的构造函数的prototype）中寻找
+- 每个class都有显示原型prototype
+- 每个实例都有隐式原型__proto__
+- 实例的__proto__指向对应class的prototype
+- 获取属性或执行方法时，先在自身属性和方法寻找，如果找不到则自动去__proto__中寻找
 
 ## 原型链
 
 当试图得到一个对象的某个属性时，会先在这个对象上面找，如果这个对象本身没有这个属性，就会去它的__proto__中寻找，如果找不到，就会到它的__proto__对象的__proto__中寻找...直到某个对象的原型为null为止。如果找到了，就把值返回回来；如果没有找到，就返回undefined。这种从对象本身往__proto__寻找下去的链成为原型链
+
+## 继承
+
+### class继承
+
+class实际上是函数，语法糖
+
+- extends
+- super
+- 扩展或重写方法
+
+
 
 ## 作用域
 

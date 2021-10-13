@@ -6,7 +6,7 @@ class jQuery {
       this[i] = result[i]
     }
     this.length = length
-    this.selectot = selector
+    this.selector = selector
   }
   get(index) {
     return this[index]

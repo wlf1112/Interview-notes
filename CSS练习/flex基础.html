@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex</title>
+    <style>
+        .box{
+            display: flex;
+            background-color: #fff;
+            margin:0 0 55px;
+        }
+        .box-item{
+            width:200px;
+            height:200px;
+            line-height: 200px;
+            margin:5px;
+            background-color: #ffd200;
+            font-size:100px;
+            color:white;
+            text-align: center;
+        }
+        .item-tall{
+            height:400px;
+            line-height: 400px;
+        }
+        .box-1{
+            flex-direction: row;
+            /* flex-direction: row-reverse; */
+            /* flex-direction: column; */
+            /* flex-direction: column-reverse; */
+        }
+        .box-2{
+            /* flex-wrap:nowrap; */
+            /* flex-wrap:wrap; */
+            flex-wrap:wrap-reverse;
+        }
+        .box-3{
+            /* flex-flow: row nowrap; */
+            flex-flow: row wrap;
+        }
+        .box-4{
+            /* justify-content: flex-start; */     /*左对齐*/
+            /* justify-content: flex-end; */       /*右对齐*/
+            /* justify-content: center; */         /*居中对齐*/
+            justify-content: space-between;  /*两端对齐，项目之间的间隔相等*/
+            /* justify-content: space-around; */        /*每个项目两侧的间隔相等，项目之间的间隔比项目与边框的间隔大一倍*/
+        }
+        .box-5{
+            align-items:flex-start;           /*交叉轴的起点对齐*/
+            /* align-items:flex-end; */       /*交叉轴的终点对齐*/
+            /* align-items:center; */         /*交叉轴的中点对齐*/
+        }
+        .box-6{
+            align-items: baseline;
+        }
+        .box-6 .box-item{
+            font-size:88px;
+            line-height: inherit;
+            text-decoration: underline;
+        }
+        .box-6 .item-tall{
+            font-size:122px;
+            line-height:inherit;
+        }
+        .box-7{
+            align-items:stretch;
+        }
+        .box-7 .box-item{
+            height:auto;
+        }
+        .box-8{
+            height:400px;
+        }
+        .box-8 .end{
+            align-self:flex-end;
+        }
+    </style>
+</head>
+<body>
+    <h3>flex-direction属性：决定主轴的方向（即项目的排列方向）</h3>
+    <div class="box box-1">
+        <div class="box-item">1</div>
+        <div class="box-item">2</div>
+        <div class="box-item">3</div>
+        <div class="box-item">4</div>
+    </div>
+
+    <h3>flex-wrap属性：默认情况下，项目都排在一条线（“轴线”）上。flex-wrap属性定义，如果在一条轴线放不下，如何换行</h3>
+    <div class="box box-2">
+        <div class="box-item">1</div>
+        <div class="box-item">2</div>
+        <div class="box-item">3</div>
+        <div class="box-item">4</div>
+        <div class="box-item">5</div>
+        <div class="box-item">6</div>
+        <div class="box-item">7</div>
+        <div class="box-item">8</div>
+        <div class="box-item">9</div>
+    </div>
+
+    <h3>flex-flow属性：flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap</h3>
+    <div class="box box-3">
+        <div class="box-item">1</div>
+        <div class="box-item">2</div>
+        <div class="box-item">3</div>
+        <div class="box-item">4</div>
+        <div class="box-item">5</div>
+        <div class="box-item">6</div>
+        <div class="box-item">7</div>
+    </div>
+
+    <h3>justify-content:定义了项目在主轴上的对齐方式</h3>
+    <div class="box box-4">
+        <div class="box-item">1</div>
+        <div class="box-item">2</div>
+        <div class="box-item">3</div>
+        <div class="box-item">4</div>
+    </div>
+
+    <h3>align-items：定义了项目在交叉轴上如何对齐</h3>
+    <div class="box box-5">
+        <div class="box-item">1</div>
+        <div class="box-item item-tall">2</div>
+        <div class="box-item">3</div>
+        <div class="box-item item-tall">4</div>
+    </div>
+    <!-- baseline：项目的第一行文字的基线对齐 -->
+    <div class="box box-6 line">
+        <div class="box-item">1</div>
+        <div class="box-item item-tall">2</div>
+        <div class="box-item">3</div>
+        <div class="box-item item-tall">4</div>
+    </div>
+    <!-- stretch：如果项目未设置高度或设置为auto,将占满整个容器的高度 -->
+    <div class="box box-7">
+        <div class="box-item">1</div>
+        <div class="box-item item-tall">2</div>
+        <div class="box-item">3</div>
+        <div class="box-item item-tall">4</div>
+    </div>
+
+    <h3>align-self：允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，
+        表示继承父元素的align-items属性，如果没有父元素，则等同于stretch</h3>
+    <div class="box box-8">
+        <div class="box-item">1</div>
+        <div class="box-item">2</div>
+        <div class="box-item end">3<div>flex-end</div></div>
+        <div class="box-item">4</div>
+    </div>
+    
+</body>
+</html>
