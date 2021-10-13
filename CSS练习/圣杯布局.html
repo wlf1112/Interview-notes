@@ -37,15 +37,22 @@
             margin-right:-150px;
         }
         #footer{
-            clear:both;
+            /* clear:both; */
             text-align: center;
             background-color: #f1f1f1;
+        }
+
+        /* 手写clearfix */
+        .clearfix:after{
+            content:'';
+            display: table;
+            clear:both;
         }
     </style>
 </head>
 <body>
     <div id="header">this is header</div>
-    <div id="container">
+    <div id="container"  class="clearfix">
         <div id="center" class="column">this is center</div>
         <div id="left" class="column">this is left</div>
         <div id="right" class="column">this is right</div>

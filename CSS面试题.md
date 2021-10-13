@@ -48,13 +48,27 @@ IE盒模型的优点：不论内边距和边框如何改变，盒子的真实宽
 - 两侧使用margin负值，以便和中间内容横向重叠
 - 防止中间内容被两侧覆盖，一个用padding，一个用margin
 
-#### 手写clearfix
-
 #### 如何实现圣杯布局和双飞翼布局
 
 #### 手写clearfix
 
+```
+.clearfix:after{
+  content:'';
+  display:table;
+  clear:both;
+}
+
+```
+
 ### flex画色子
+
+常用语法：
+- flex-direction
+- justify-content
+- align-items
+- flex-wrap
+- align-self
 
 #### flex实现一个三点的色子
 
@@ -62,17 +76,57 @@ IE盒模型的优点：不论内边距和边框如何改变，盒子的真实宽
 
 ### absolute和relative分别依据什么定位？
 
+- relative依据自身定位
+- absolute依据最近一层的定位元素定位
+  
+定位元素：
+ - absolute reletive fixed
+ - body
+
 ### 居中对齐有哪些实现方式？
+
+- 水平居中
+  - inline元素：text-align:center
+  - block元素：margin:auto
+  - absolute:left:50% + margin-left 负值
+  
+- 垂直居中
+  - inline元素：line-height的值等于height
+  - absolute元素：top:50% + margin-top 负值 (必须知道子元素的尺寸)
+  - absolute元素：transfrom:translate(-50%,-50%)
+  - absolute元素：top,left,bottom,right=0 + margin:auto
 
 ## 图文样式
 
 ### line-height的继承问题
 
+- 写具体数值，如果 30px，则继承该值
+- 写比例，如果 2/1.5，则继承该比例，实际line-height的值是 自身font-size*该比例
+- 写百分比，如果200%，则继承 父元素font-size*百分比 求得的值
+
 ## 响应式
 
 ### rem是什么？
 
+- px，绝对长度单位，最常用
+- em，相对长度单位，相对于父元素，不常用
+- rem，相对长度单位，相对于根元素，常用于响应式布局
+
 ### 如何实现响应式？
+
+- media-query，根据不同的屏幕宽度设置根元素font-size
+- rem，基于根元素的相对单位
+
+#### 追加响应式vw/vh
+
+- rem弊端
+- 网页视口尺寸
+  - window.screen.height        //屏幕高度
+  - window.innerHeight          //网页视口高度
+  - document.body.clientHeight  //body高度
+- vh 网页视口高度的1/100
+- vw 网页视口高度的1/100
+- vmax取两者最大值；vmin取两者最小值
 
 ## CSS3
 
