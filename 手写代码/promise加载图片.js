@@ -22,7 +22,7 @@ function loadImg(src) {
 //   return img
 // }).then(img => {
 //   console.log(img.height)
-// }).catch(ex => console.log(ex))
+// }).catch(ex => console.error(ex))
 
 //加载两张图片，先加载第一张，后加载第二张
 
@@ -40,4 +40,4 @@ loadImg(url1).then(img1 => {
   return img2
 }).then(img2 => {
   console.log(img2.height)
-}).catch(ex => console.log(ex))
+}).catch(ex => console.error(ex))

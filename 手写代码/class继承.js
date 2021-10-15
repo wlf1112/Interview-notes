@@ -45,6 +45,16 @@ console.log(wanglaoshi.eat());
 console.log(typeof People);
 console.log(typeof Student);
 
-console.log(xialuo.__proto__);  //People{}
-console.log(Student.prototype); //People{}
+console.log(xialuo.__proto__);
+console.log(xialuo.__proto__.constructor);
+console.log(Student.prototype);
+console.log(Student.prototype.constructor);
+console.log(xialuo.__proto__===Student.prototype);
+console.log(xialuo.__proto__.constructor==Student.prototype.constructor);
+
 console.log(Student.prototype.__proto__);
+console.log(Student.prototype.__proto__.constructor);
+console.log(People.prototype);
+console.log(People.prototype.constructor);
+console.log(Student.prototype.__proto__===People.prototype);
+console.log(Student.prototype.__proto__.constructor===People.prototype.constructor);

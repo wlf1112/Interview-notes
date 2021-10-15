@@ -1,129 +1,178 @@
-/**
- * 借助原型链实现继承，缺点：引用类型被所有实例共享
- */
-function Parent() {
-  this.name = 'kevin'
-  this.type = [1, 2, 3, 4]
+//原型链继承
+
+//父类
+// function Animal(name){
+//   this.type='Animal';
+//   this.name=name||'动物';
+
+//   this.sleep=function(){
+//     console.log(`${this.name} 正在睡觉`);
+//   }
+//   //引用类型属性
+//   this.feature=['fat','thin']
+// }
+
+// Animal.prototype.eat=function(food){
+//   console.log(`${this.name} 正在吃 ${food}`);
+// }
+
+// //子类
+// function Cat(name){
+//   this.name=name;
+// }
+
+// Cat.prototype=new Animal();
+// Cat.prototype.constructor=Cat;
+
+// var cat=new Cat('加菲猫');
+// console.log(cat.type);
+// console.log(cat.name);
+// console.log(cat.sleep());
+// console.log(cat.eat('猫粮'));
+
+// var cat1=new Cat();
+// var cat2=new Cat();
+// console.log(cat1.feature);
+// console.log(cat2.feature);
+
+// //修改
+// cat1.feature.push('small')
+// console.log(cat1.feature);
+// console.log(cat2.feature);
+// console.log(cat instanceof Animal);
+// console.log(cat instanceof Cat);
+
+
+//构造继承
+
+//父类
+// function Animal(age){
+//   this.name='Animal';
+//   this.age=age;
+//   //实例函数
+//   this.sleep=function(){
+//     console.log(`${this.name} 正在睡觉`);
+//   }
+// }
+
+// Animal.prototype.eat=function(food){
+//   console.log(`${this.name} 正在吃 ${food}`);
+// }
+
+// //子类
+// function Cat(name,age){
+//   Animal.call(this,age);
+//   this.name=name||'tom';
+// }
+
+// var cat=new Cat('tony',11)
+// console.log(cat.age);
+// console.log(cat.sleep());
+// // console.log(cat.eat());
+// console.log(cat instanceof Cat);
+// console.log(cat instanceof Animal);
+
+
+//复制继承
+
+//父类
+// function Animal(parentage){
+//   this.name='Animal';
+//   this.age=parentage;
+//   //实例函数
+//   this.sleep=function(){
+//     console.log(`${this.name} 正在睡觉`);
+//   }
+// }
+
+// Animal.prototype.eat=function(food){
+//   console.log(`${this.name} 正在吃 ${food}`);
+// }
+
+// //子类
+// function Cat(name,age){
+//   this.name=name;
+//   var animal=new Animal(age);
+//   for(var key in animal){
+//     if(animal.hasOwnProperty(key)){
+//       this[key]=animal[key]
+//     }else{
+//       Cat.prototype[key]=animal[key]
+//     }
+//   }
+// }
+
+// var cat=new Cat('tony',12)
+// console.log(cat.age);
+// console.log(cat.sleep());
+// console.log(cat.eat('猫粮'));
+// console.log(cat instanceof Cat);
+// console.log(cat instanceof Animal);
+
+
+//组合继承
+
+//父类
+// function Animal(age){
+//   this.name='Animal';
+//   this.age=age;
+//   //实例函数
+//   this.sleep=function(){
+//     console.log(`${this.name} 正在睡觉`);
+//   },
+//   this.feature=['fat','thin']
+// }
+
+// Animal.prototype.eat=function(food){
+//   console.log(`${this.name} 正在吃 ${food}`);
+// }
+
+// //子类
+// function Cat(name,age){
+//   Animal.call(this,age);
+//   this.name=name;
+// }
+
+// Cat.prototype=new Animal();
+// Cat.prototype.contructor=Cat;
+
+// var cat=new Cat('tony',10)
+// console.log(cat.age);
+// console.log(cat.name);
+// console.log(cat.sleep());
+// console.log(cat.eat());
+
+
+//寄生组合继承
+
+//父类
+function Animal(age){
+  this.name='Animal';
+  this.age=age;
+  //实例函数
+  this.sleep=function(){
+    console.log(`${this.name} 正在睡觉`);
+  },
+  this.feature=['fat','thin']
 }
 
-Parent.prototype.getName = function () {
-  console.log(this.name)
+Animal.prototype.eat=function(food){
+  console.log(`${this.name} 正在吃 ${food}`);
 }
 
-function Child() {
-
+function Cat(name){
+  Animal.call(this);
+  this.name=name;
 }
 
-Child.prototype = new Parent()
-var child1 = new Child()
-child1.type.push(5)
-console.log(child1.type)
-var child2 = new Child()
-console.log(child2.type)
+Cat.prototype=Object.create(Animal.prototype);
+Cat.prototype.contructor=Cat;
 
-/**
- * 借助call实现继承，缺点：方法在构造函数中定义，每次创建实例都会创建一遍方法；
- *                        继承不了父级原型上的函数
- */
-function Parent() {
-  this.type = [1, 2, 3, 4]
-}
-
-Parent.prototype.sayName = function () {
-  console.log(`${this.name} say`);
-}
-
-function Child() {
-  Parent.call(this)
-}
-
-var child = new Child()
-child.type.push(5)
-console.log(child);
-
-var child1 = new Child()
-console.log(child1);
-
-/**
- * 组合继承（结合原型链和call）缺点：会调用两次构造函数
- */
-function Parent() {
-  this.name = 'parent'
-  this.type = [1, 2, 3, 4]
-}
-
-Parent.prototype.sayName = function () {
-  console.log(`${this.name} say`);
-}
-
-function Child() {
-  Parent.call(this)
-}
-
-Child.prototype = new Parent()
-
-var child1 = new Child()
-child1.type.push(5)
-console.log(child1.type);
-console.log(child1);
-console.log(child1.sayName());
-
-var child2 = new Child()
-console.log(child2.type);
-console.log(child2);
-console.log(child2.sayName());
-
-
-/**
- * 原型式继承：包含引用类型的属性值会共享
- */
-function createObj(o) {
-  function F() {
-
-  }
-  F.prototype = o
-  return new F()
-}
-
-var person = {
-  name: 'kevin',
-  friends: ['daisy', 'candy']
-}
-
-var person1 = createObj(person)
-var person2 = createObj(person)
-
-person1.name = 'person1'
-console.log(person1)
-console.log(person2)
-
-person1.friends.push('taylor')
-console.log(person2.friends);
-console.log(person1.friends);
-
-
-/**
- * 寄生组合式继承
- */
-function Parent(name) {
-  this.name = name
-  this.colors = ['red', 'blue', 'green']
-}
-
-Parent.prototype.getName = function () {
-  console.log(this.name);
-}
-
-function Child(name, age) {
-  Parent.call(this, name)
-  this.age = age
-}
-
-var F = function () {}
-
-F.prototype = Parent.prototype
-
-Child.prototype = new F()
-
-var child1 = new Child('kevin', '18')
-console.log(child1);
+var cat=new Cat('tony');
+var cat1=new Cat('john');
+console.log(cat.name);
+console.log(cat.sleep());
+console.log(cat.eat('猫粮'));
+cat.feature.push('small');
+console.log(cat.feature);
+console.log(cat1.feature);
