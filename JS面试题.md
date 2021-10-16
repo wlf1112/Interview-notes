@@ -337,9 +337,107 @@ this取什么值，是在函数执行的时候确定的，不是在函数定义�
 
 Promise是为了解决callback hell
 
+#### 三种状态
 
+- pending resolved rejected
+- pending ——> resolved 或 pending ——> rejected
+- 变化不可逆
 
+#### 状态的表现和变化
 
+- 状态的表现
+  - pending状态，不会触发then和catch
+  - resolved状态，会触发后续的then回调函数
+  - rejected状态，会触发后续的catch回调函数
 
+#### then和catch对状态的影响
 
+- then正常返回resolved，里面有报错则返回返回rejected
+- catch正常返回resolved，里面有报错则返回rejected
+
+### event loop
+
+event loop是异步回调实现的原理
+
+#### JS如何执行
+
+- 从前到后，一行一行执行
+- 如果某一行执行报错，则停止下面代码的执行
+- 先把同步代码执行完，再执行异步
+
+#### event loop过程
+
+- 同步代码，一行一行放在call back执行
+- 遇到异步，会先“记录”下，等待时机（定时、网络请求等）
+- 时机到了，就移动到Callback Queue
+- 如Call Stack为空（即同步代码执行完），Event loop开始工作
+- Event loop轮询查找Callback Queue，如有则移动到Call Stack执行
+- 然后继续轮询查找
+
+#### DOM事件和event loop
+
+- JS是单线程的
+- 异步（setTimeout，ajax等）使用回调，基于event loop
+- DOM事件也使用回调，基于event loop
+
+#### event loop和DOM渲染
+
+- JS是单线程的，而且和DOM渲染共用一个线程
+- JS执行的时候，得留一些时机供DOM渲染
+- 每次Call Stack清空（即每次轮询结束），即同步任务执行完，都是DOM重新渲染的机会，DOM结构如有改变则重新渲染
+- 然后再去触发下一次Event Loop
+
+### async/await
+
+背景：Promise then catch链式调用也是基于回调函数。async/await是同步语法，彻底消灭回调函数
+
+#### async/await和Promise的关系
+
+- async/await是消灭异步回调的终极武器，但和Promise并不互斥，二者相辅相成
+- 执行async函数，返回的是Promise对象。await相当于Promise的then
+- try..catch可捕获异常，代替了Promise的catch
+- 注意：await都可以看作是异步回调 callback 的内容
+
+### 异步的本质
+
+- async/await是消灭异步回调的终极武器
+- JS还是单线程，还得有异步，还得是基于event loop
+- async/await只是一个语法糖
+
+### for...of
+
+- for...in（以及forEach for）是常规的同步遍历
+- for..of常用于异步的遍历
+
+### 宏任务macroTask和微任务microTask
+
+#### 宏任务和微任务
+
+- 宏任务：setTimeout，setInterval，Ajax，DOM事件
+- 微任务：Promise，async/await
+- 微任务执行时机比宏任务要早
+
+#### 宏任务和微任务的区别
+
+- 宏任务：DOM渲染后触发，如setTimeout
+- 微任务：DOM渲染前触发，如果Promise
+
+#### 从event loop角度解析为何微任务执行更早
+
+- 微任务是ES6语法规定的
+- 宏任务是由浏览器规定的
+
+## JS Web API
+
+### 从JS基础知识到JS Web API
+
+- JS基础知识，规定语法（ECMA 262标准）
+- JS Web API，网页操作的API（W3C标准）
+- 前者是后者的基础
+
+#### attr和property的区别
+
+- property：修改对象属性，不会体现到html结构（指html标签）中
+- attribute：修改html属性，会改变html结构（指html标签）
+- 两者都可能引起DOM重新渲染
 
