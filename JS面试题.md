@@ -441,3 +441,68 @@ event loop是异步回调实现的原理
 - attribute：修改html属性，会改变html结构（指html标签）
 - 两者都可能引起DOM重新渲染
 
+## ajax
+
+### XMLHttpRequest
+
+#### readyState
+- 0：(未初始化)还没有调用send()方法
+- 1：(载入)已调用send()方法，正在发送请求
+- 2:（载入完成）send()方法执行完成，已经接收到全部响应
+- 3：(交互)正在解析响应内容
+- 4：(完成)响应内容解析完成，可以在客户端调用
+
+#### status
+- 2xx 表示完成处理请求，如200
+- 3xx 需要重定向，浏览器直接跳转，如果301,302,304
+- 4xx 客户端请求错误，如404 403
+- 5xx 服务端错误
+
+### 跨域：同源策略，跨域解决方案
+
+#### 同源策略
+
+- ajax请求时，浏览器要求网页和server必须同源（安全）
+- 同源：协议、域名、端口，三者必须一致
+
+#### 加载图片 css js可无视同源策略
+
+- <img src=跨域的图片地址> 可用于统计打点，可使用第三方统计服务
+- <link href=跨域的图片地址>  可使用CDN
+- <script src="跨域的js地址"></script> 可使用CDN，实现JSONP
+
+#### 跨域
+
+- 所有的跨域，都必须经过server端允许和配合
+- 未经server端允许就实现跨域，说明浏览器有漏洞
+ 
+重点：要知道JSONP的原理
+
+## 存储
+
+### cookie
+
+#### cookie
+
+- 本身用于浏览器和server通讯
+- 被“借用”到本地存储来
+- 可用document.cookie='...'进行修改
+
+#### 缺点
+- 存储大小最大4k
+- http请求时需要发送到服务端，增加请求数量
+- 只能用document.cookie='...'来修改，太过简陋
+
+### localStorage和sessionStorage
+
+- HTML5专门为存储而设计，最大可存5M
+- API简单易用 setItem getItem
+- 不会随着http请求被发送出去
+
+#### 二者的区别
+
+- localStorage数据会永久存储，除非代码或手动删除
+- sessionStorage数据只存在于当前会话，浏览器关闭则清空
+- 一般用localStorage会更多一些
+
+
