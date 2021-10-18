@@ -4,15 +4,15 @@
 
 js是一种弱类型脚本语言。弱类型指的是变量定义时，不需要指定类型，在程序运行过程中会自动判断。
 
-ECMAScript中定义了6种原始类型：
+ECMAScript中定义了7种原始类型：
 
 - Boolean
 - Number
 - String
 - Null
 - Undefined
-- Symbol
-- Object
+- Symbol：代表创建后独一无二且不可改变的数据类型，它主要是为了解决可能出现的全局变量冲突的问题
+- BigInt
 
 ### JS变量类型判断的方法：
 
@@ -44,7 +44,7 @@ console.log(typeof s);              //symbol
 #### instanceof
 
 - instanceof用来判断对象的类型，不能判断基本数据类型
-- 内部运行机制：判断在原型链中能否找到该类型的原型，如果能找到，返回true
+- 内部运行机制：测试一个对象在其原型链上是否存在一个构造函数的prototype属性
 
 ```
 console.log(2 instanceof Number);                //false
@@ -55,7 +55,6 @@ console.log(function(){}  instanceof Function);  //true
 console.log({} instanceof Object);               //true
 
 ```
-
 
 #### constructor
 
@@ -88,6 +87,18 @@ console.log(a.call(function(){}));          //'[object Function'
 console.log(a.call({}));                    //'[object Object]'
 
 ```
+#### 判断数组的方法
+
+- Object.prototype.toString.call()
+
+```
+ Object.prototype.toString.call([1,2,3]).slice(8,-1)==='Array'
+
+```
+- 通过原型链判断  obj.__proto__==Array.prototype
+- ES6 Array.isArray()
+- 通过instanceof
+- 通过Array.isPrototypeOf(obj)
 
 ### 值类型和引用类型
 
