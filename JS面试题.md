@@ -25,6 +25,7 @@ ECMAScript中定义了7种原始类型：
 
 - typeof取得的值有：boolean、number、string、object、undefined、symbol、function
 - typeof null的结果是object，这是typeof的一个bug
+- typeof Array的结果是function，typeof Onject的结果是function
 
 ```
 console.log(typeof 2);              //number
@@ -140,6 +141,12 @@ protype在规范中的定义是：给其它对象提供共享属性的对象
 ## 原型链
 
 当试图得到一个对象的某个属性时，会先在这个对象上面找，如果这个对象本身没有这个属性，就会去它的__proto__中寻找，如果找不到，就会到它的__proto__对象的__proto__中寻找...直到某个对象的原型为null为止。如果找到了，就把值返回回来；如果没有找到，就返回undefined。这种从对象本身往__proto__寻找下去的链成为原型链
+
+### 重难点
+
+1. 底层实现js的时候创建了Function，然后这个底层的Function创建了js的Function，所以Function.prototype=Function.__proto__
+2. Function创建了Object，让Object创建对象，并设置它为终点，因此Object.prototype.__proto__=null
+  
 
 ## 继承
 
