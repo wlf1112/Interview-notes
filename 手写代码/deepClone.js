@@ -1,7 +1,10 @@
+
 /**
  * 深拷贝
- * @param {Object} obj 要拷贝的对象 
+ * @param {Object} obj 要拷贝的对象
+ * @returns 
  */
+
 function deepClone(obj = {}) {
   if (typeof obj !== 'object' || obj == null) {
     // obj是null,或者不是对象和数组，直接返回
@@ -22,7 +25,6 @@ function deepClone(obj = {}) {
     if (obj.hasOwnProperty(key)) {
       //递归
       result[key] = deepClone(obj[key])
-
     }
   }
 

@@ -4,15 +4,15 @@
 
 js是一种弱类型脚本语言。弱类型指的是变量定义时，不需要指定类型，在程序运行过程中会自动判断。
 
-ECMAScript中定义了6种原始类型：
+ECMAScript中定义了7种原始类型：
 
 - Boolean
 - Number
 - String
 - Null
 - Undefined
-- Symbol
-- Object
+- Symbol：代表创建后独一无二且不可改变的数据类型，它主要是为了解决可能出现的全局变量冲突的问题
+- BigInt
 
 ### JS变量类型判断的方法：
 
@@ -25,6 +25,7 @@ ECMAScript中定义了6种原始类型：
 
 - typeof取得的值有：boolean、number、string、object、undefined、symbol、function
 - typeof null的结果是object，这是typeof的一个bug
+- typeof Array的结果是function，typeof Onject的结果是function
 
 ```
 console.log(typeof 2);              //number
@@ -36,12 +37,15 @@ console.log(typeof {});             //object
 console.log(typeof undefined);      //undefined
 console.log(typeof null);           //object
 
+const s =Symbol('s');
+console.log(typeof s);              //symbol
+
 ```
 
-### instanceof
+#### instanceof
 
 - instanceof用来判断对象的类型，不能判断基本数据类型
-- 内部运行机制：判断在原型链中能否找到该类型的原型，如果能找到，返回true
+- 内部运行机制：测试一个对象在其原型链上是否存在一个构造函数的prototype属性
 
 ```
 console.log(2 instanceof Number);                //false
@@ -53,7 +57,7 @@ console.log({} instanceof Object);               //true
 
 ```
 
-### constructor
+#### constructor
 
 - 判断数据类型，可以用来判断基本数据类型
 - 对象实例可以通过constructor对象访问它的构造函数
@@ -69,7 +73,7 @@ console.log(({}).constructor===Object);                 //true
 
 ```
 
-### Object.prototype.toString.call()
+#### Object.prototype.toString.call()
 
 - Object.prototype.toString.call()可以得到对象的具体类型
 
@@ -84,6 +88,18 @@ console.log(a.call(function(){}));          //'[object Function'
 console.log(a.call({}));                    //'[object Object]'
 
 ```
+#### 判断数组的方法
+
+- Object.prototype.toString.call()
+
+```
+ Object.prototype.toString.call([1,2,3]).slice(8,-1)==='Array'
+
+```
+- 通过原型链判断  obj.__proto__==Array.prototype
+- ES6 Array.isArray()
+- 通过instanceof
+- 通过Array.isPrototypeOf(obj)
 
 ### 值类型和引用类型
 
@@ -92,20 +108,134 @@ console.log(a.call({}));                    //'[object Object]'
     1. 按值传递的类型，复制一份存入栈内存，一般不会占用太多内存，保证了访问速度
     2. 按引用传递的类型，复制其引用，不是整个复制值，保证了过大的对象不会因为不停复制内容造成内存浪费
 
+值类型用图表示：
+![](https://s3.bmp.ovh/imgs/2021/10/e2a9073c3d8d13e4.png)
+
+引用类型用图表示：
+![](https://s3.bmp.ovh/imgs/2021/10/23fd7e559abc44b0.png)
+
+### 类型转换
+
+#### 字符串拼接
+
+#### ==
+
+除了`==null`外，其他都一律用`===`
+
+#### if语句和逻辑判断
+
+- truly变量：!!a===true的变量
+- falsely变量：!!a===false的变量 (0、NaN、''、null、undefined、false)
+  
+逻辑判断：例如 10||0 ，可以理解为 truely变量||falsy变量 ，短路输出10
+
 ## 原型
 
 protype在规范中的定义是：给其它对象提供共享属性的对象
 
-- 所有的引用类型（数组、对象、函数），都具有对象特性，可以自由扩展属性（null除外）
-- 所有的引用类型（数组、对象、函数），都具有__proto__属性，属性值是一个普通的对象
-- 所有的函数，都有一个prototype属性，属性值也是一个普通的对象
-- 所有的引用类型（数组、对象、函数），__proto__属性指向它的构造函数的prototype属性值
-
-当试图得到一个对象的某个属性时，如果这个对象本身没有这个属性，那么会去它的__proro__（即它的构造函数的prototype）中寻找
+- 每个class都有显示原型prototype
+- 每个实例都有隐式原型__proto__
+- 实例的__proto__指向对应class的prototype
+- 获取属性或执行方法时，先在自身属性和方法寻找，如果找不到则自动去__proto__中寻找
 
 ## 原型链
 
 当试图得到一个对象的某个属性时，会先在这个对象上面找，如果这个对象本身没有这个属性，就会去它的__proto__中寻找，如果找不到，就会到它的__proto__对象的__proto__中寻找...直到某个对象的原型为null为止。如果找到了，就把值返回回来；如果没有找到，就返回undefined。这种从对象本身往__proto__寻找下去的链成为原型链
+
+### 重难点
+
+1. 底层实现js的时候创建了Function，然后这个底层的Function创建了js的Function，所以Function.prototype=Function.__proto__
+2. Function创建了Object，让Object创建对象，并设置它为终点，因此Object.prototype.__proto__=null
+  
+
+## 继承
+
+### 原型链继承
+
+#### 主要思想
+
+重写子类的prototype属性，将其指向父类的实例
+
+#### 优点
+
+- 简单，易于实现：只需要设置子类的prototype属性为父类的实例
+- 继承关系纯粹：生成的实例既是子类的实例，又是父类的实例
+- 可通过子类直接访问父类原型链属性和函数
+
+#### 缺点
+
+- 子类所有的实例将共享父类的属性
+  如果父类有引用类型的属性，改变子类某个实例的属性值，将会影响其他实例的属性值
+- 在创建子类实例时，无法向父类的构造函数传递参数
+- 无法实现多继承
+- 为子类增加原型对象的属性和函数时，必须放在`new 父类构造函数()`之后
+
+### 构造继承
+
+#### 主要思想
+
+在子类的构造函数通过call()函数改变this指向，调用父类的构造函数，从而将父类实例的属性和函数绑定到子类的this上
+
+#### 优点
+- 可以解决子类实例共享父类属性的问题
+- 创建子类的实例时，可以向父类传递参数
+- 可以实现多继承：通过多次调用call()函数来继承多个父对象
+
+#### 缺点
+- 实例只是子类的实例，不是父类的实例
+- 只能继承父类实例的属性和函数，不能继承原型对象上的属性和函数
+- 无法复用父类的实例函数
+
+### 复制继承
+
+#### 主要思想
+
+- 生成父类的实例
+- 通过for...in遍历父类实例的属性和函数
+- 将其依次设置为子类实例的属性和函数或者原型对象上的属性和函数
+
+#### 优点
+
+- 支持多继承
+- 能同时继承实例的属性和函数与原型对象上的属性和函数
+- 可以向父类构造函数中传值
+
+#### 缺点
+
+- 父类所有的属性都需要复制，消耗内存
+- 实例只是子类的实例，不是父类的实例
+
+### 组合继承
+
+#### 主要思想
+
+- 在子类构造函数中通过call()函数调用父类的构造函数，将父类实例的属性和函数绑定到子类的this中
+- 改变子类的prototype属性，继承父类原型对象的属性和函数
+
+#### 优点
+
+- 既能继承父类实例属性和函数，又能继承原型对象上的属性和函数
+- 既是子类的实例，又是父类的实例
+- 不存在引用属性共享的问题
+- 可以向父类的构造函数中传递参数
+
+#### 缺点
+
+- 父类的实例属性会绑定两次
+  - 子类构造函数中，通过call()函数调用了父类的构造函数
+  - 改写子类的prototype属性，生成父类的实例时调用了父类的构造函数
+
+### 寄生组合继承
+
+### class继承
+
+class实际上是函数，语法糖
+
+- extends
+- super
+- 扩展或重写方法
+
+class继承子类的__proto__指向父类
 
 ## 作用域
 
@@ -136,14 +266,20 @@ JavaScript中变量的定义和调用在固定的范围中进行，这个范围�
 
 ### this
 
+this取什么值，是在函数执行的时候确定的，不是在函数定义的时候确定的
+
 - this指向全局对象：当函数没有所属对象而直接调用时，this指向全局对象
-- this指向所属对象
+- this指向所属对象(例如obj.fn())
 - this指向对象实例：当通过new操作符调用构造函数生成对象实例时，this指向该实例
 - this指向call()函数、apply()函数、bind()函数的调用后重新绑定的对象
 - 闭包中的this：函数的this变量只能被自身访问，其内部函数无法访问。当遇到闭包时，闭包美不的this关键字无法访问到外部函数的this变量
 - 箭头函数中的this：箭头函数不会创建自己的this，而是会从自己作用域链的上一层继承this
 
 ## 作用域链
+
+### 自由变量
+
+一个变量在当前作用域没有定义，但被使用了
 
 ### 定义
 
@@ -163,18 +299,23 @@ JavaScript中变量的定义和调用在固定的范围中进行，这个范围�
 
 ### 特点
 
-- 函数拥有外部变量的引用，在函数返回时，该变量仍处于活跃状态
-- 闭包作为一个函数返回时，其执行上下文环境不会被销毁，仍处于执行上下文环境中
+作用域应用的特殊情况，有两种表现：
+- 函数作为参数被传递
+- 函数作为返回值被返回
 
 ### 优点
 
  - 保护函数及变量的安全，实现封装，防止变量流入其他环境中发生命名冲突，造成环境污染
  - 可以在内存中维护变量并缓存，提高执行效率
 
- ### 缺点
+### 缺点
 
  - 消耗内存
  - 泄漏内存
+
+### 注意
+
+闭包及所有自由变量的查找，是在函数定义的地方，向上级作用域查找，不是在执行的地方查找
 
 ## 作用域链和原型链的区别
 
@@ -196,21 +337,190 @@ JavaScript中变量的定义和调用在固定的范围中进行，这个范围�
 
 ### 单线程
 
-JS是单线程语言，只能同时做一件事。原因是：避免DOM渲染冲突
+- JS是单线程语言，只能同时做一件事
+- JS和DOM渲染共用同一个线程，因为JS可修改DOM结构
+- 遇到等待（网络请求，定时任务），不能卡住
+- 因此需要异步，异步是基于回调callback函数形式
 
 ### 异步和同步的区别
 
 基于JS是单线程语言，异步不会阻塞代码执行，同步会阻塞代码执行
 
-### 异步应用场景
-- 网络请求
-- 定时任务，如setTimeout,setInterval
+### 异步的应用场景
 
-## BOM
+- 网络请求，如ajax，图片加载
+- 定时任务，如setTimeout
 
+### Promise
 
+Promise是为了解决callback hell
 
+#### 三种状态
 
+- pending resolved rejected
+- pending ——> resolved 或 pending ——> rejected
+- 变化不可逆
 
+#### 状态的表现和变化
+
+- 状态的表现
+  - pending状态，不会触发then和catch
+  - resolved状态，会触发后续的then回调函数
+  - rejected状态，会触发后续的catch回调函数
+
+#### then和catch对状态的影响
+
+- then正常返回resolved，里面有报错则返回返回rejected
+- catch正常返回resolved，里面有报错则返回rejected
+
+### event loop
+
+event loop是异步回调实现的原理
+
+#### JS如何执行
+
+- 从前到后，一行一行执行
+- 如果某一行执行报错，则停止下面代码的执行
+- 先把同步代码执行完，再执行异步
+
+#### event loop过程
+
+- 同步代码，一行一行放在call back执行
+- 遇到异步，会先“记录”下，等待时机（定时、网络请求等）
+- 时机到了，就移动到Callback Queue
+- 如Call Stack为空（即同步代码执行完），Event loop开始工作
+- Event loop轮询查找Callback Queue，如有则移动到Call Stack执行
+- 然后继续轮询查找
+
+#### DOM事件和event loop
+
+- JS是单线程的
+- 异步（setTimeout，ajax等）使用回调，基于event loop
+- DOM事件也使用回调，基于event loop
+
+#### event loop和DOM渲染
+
+- JS是单线程的，而且和DOM渲染共用一个线程
+- JS执行的时候，得留一些时机供DOM渲染
+- 每次Call Stack清空（即每次轮询结束），即同步任务执行完，都是DOM重新渲染的机会，DOM结构如有改变则重新渲染
+- 然后再去触发下一次Event Loop
+
+### async/await
+
+背景：Promise then catch链式调用也是基于回调函数。async/await是同步语法，彻底消灭回调函数
+
+#### async/await和Promise的关系
+
+- async/await是消灭异步回调的终极武器，但和Promise并不互斥，二者相辅相成
+- 执行async函数，返回的是Promise对象。await相当于Promise的then
+- try..catch可捕获异常，代替了Promise的catch
+- 注意：await都可以看作是异步回调 callback 的内容
+
+### 异步的本质
+
+- async/await是消灭异步回调的终极武器
+- JS还是单线程，还得有异步，还得是基于event loop
+- async/await只是一个语法糖
+
+### for...of
+
+- for...in（以及forEach for）是常规的同步遍历
+- for..of常用于异步的遍历
+
+### 宏任务macroTask和微任务microTask
+
+#### 宏任务和微任务
+
+- 宏任务：setTimeout，setInterval，Ajax，DOM事件
+- 微任务：Promise，async/await
+- 微任务执行时机比宏任务要早
+
+#### 宏任务和微任务的区别
+
+- 宏任务：DOM渲染后触发，如setTimeout
+- 微任务：DOM渲染前触发，如果Promise
+
+#### 从event loop角度解析为何微任务执行更早
+
+- 微任务是ES6语法规定的
+- 宏任务是由浏览器规定的
+
+## JS Web API
+
+### 从JS基础知识到JS Web API
+
+- JS基础知识，规定语法（ECMA 262标准）
+- JS Web API，网页操作的API（W3C标准）
+- 前者是后者的基础
+
+#### attr和property的区别
+
+- property：修改对象属性，不会体现到html结构（指html标签）中
+- attribute：修改html属性，会改变html结构（指html标签）
+- 两者都可能引起DOM重新渲染
+
+## ajax
+
+### XMLHttpRequest
+
+#### readyState
+- 0：(未初始化)还没有调用send()方法
+- 1：(载入)已调用send()方法，正在发送请求
+- 2:（载入完成）send()方法执行完成，已经接收到全部响应
+- 3：(交互)正在解析响应内容
+- 4：(完成)响应内容解析完成，可以在客户端调用
+
+#### status
+- 2xx 表示完成处理请求，如200
+- 3xx 需要重定向，浏览器直接跳转，如果301,302,304
+- 4xx 客户端请求错误，如404 403
+- 5xx 服务端错误
+
+### 跨域：同源策略，跨域解决方案
+
+#### 同源策略
+
+- ajax请求时，浏览器要求网页和server必须同源（安全）
+- 同源：协议、域名、端口，三者必须一致
+
+#### 加载图片 css js可无视同源策略
+
+- <img src=跨域的图片地址> 可用于统计打点，可使用第三方统计服务
+- <link href=跨域的图片地址>  可使用CDN
+- <script src="跨域的js地址"></script> 可使用CDN，实现JSONP
+
+#### 跨域
+
+- 所有的跨域，都必须经过server端允许和配合
+- 未经server端允许就实现跨域，说明浏览器有漏洞
+ 
+重点：要知道JSONP的原理
+
+## 存储
+
+### cookie
+
+#### cookie
+
+- 本身用于浏览器和server通讯
+- 被“借用”到本地存储来
+- 可用document.cookie='...'进行修改
+
+#### 缺点
+- 存储大小最大4k
+- http请求时需要发送到服务端，增加请求数量
+- 只能用document.cookie='...'来修改，太过简陋
+
+### localStorage和sessionStorage
+
+- HTML5专门为存储而设计，最大可存5M
+- API简单易用 setItem getItem
+- 不会随着http请求被发送出去
+
+#### 二者的区别
+
+- localStorage数据会永久存储，除非代码或手动删除
+- sessionStorage数据只存在于当前会话，浏览器关闭则清空
+- 一般用localStorage会更多一些
 
 
