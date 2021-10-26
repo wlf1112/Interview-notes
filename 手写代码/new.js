@@ -1,29 +1,68 @@
-function myNew() {
-  //获取第一个参数
-  let Constructor = [].shift.call(arguments);
-  //定义返回的obj
-  let obj = {};
-  //obj继承原型上的方法
-  obj._proto_ = Constructor.prototype;
-  //继承构造函数实例上的属性
-  let r = Constructor.apply(obj, arguments);
-  //返回obj
-  return r instanceof Object ? r : obj;
-}
+/**
+ * 手写new
+ * 1.ES5实现
+ * 2.ES6实现
+ */
 
-
-//测试
-function Animal(type) {
-  this.type = type;
-  //如果当前构造函数返回的是一个引用类型，需要把这个对象（或者函数）返回
-  return {
-    name: 'jw'
+//ES5实现
+function myNew(){
+  let newObject=null
+  //获取构造函数
+  let constructor=Array.prototype.shift.call(arguments)
+  if(typeof constructor!=='function'){
+    console.error('type error')
+    return;
   }
-}
-Animal.prototype.say = function () {
-  console.log("say");
-};
 
-let animal = new myNew(Animal, "哺乳类");
-//console.log(animal.type);
-console.log(animal)
+  newObject=Object.create(constructor.prototype);
+  let result=null
+  result=constructor.apply(newObject,arguments)
+  
+  let flag=result && (typeof result==='object' || typeof result==='function')
+  return flag ? result : newObject;
+}
+
+
+//ES6实现
+function myNew(fn,...args){
+  let obj=Object.create(fn.prototype)
+  let res=fn.call(obj,...args)
+  if(res && (typeof res==='object'|| typeof res==='function')){
+    return res
+  }
+  return obj
+}
+
+
+//构造函数形式一
+// function Person(name,age){
+//   this.name=name
+//   this.age=age
+// }
+
+//构造函数形式二：返回对象
+// function Person(name,age){
+//   this.name=name
+//   this.age=age
+  
+//   return {
+//     info:`${this.name}的年龄是${this.age}`
+//   }
+// }
+
+//构造函数形式三
+function Person(name,age){
+  this.name=name
+  this.age=age
+
+  return 'demo'
+}
+
+
+Person.prototype.say=function(){
+  console.log(this.age);
+}
+
+let p1=myNew(Person,'lihua',18)
+console.log(p1);
+p1.say()
