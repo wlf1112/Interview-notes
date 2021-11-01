@@ -1,9 +1,41 @@
-//apply和call的区别在于：apply接收的参数是数组
-Function.prototype.myApply = function (context, args) {
-  const fn = Symbol('fn'); //用Symbol是为了防止覆盖self上的方法
-  context = context || window;
-  context.fn = this;
-  let result = eval('context.fn(...args)');
-  delete context.fn; //删除声明的fn属性
-  return result; //返回执行结果
+// ES5写法
+Function.prototype.myApply=function(context){
+  if(typeof this!=='function'){
+    console.error('type error');
+  }
+
+  let result=null;
+
+  context=context||window;
+  context.fn=this;
+  if(arguments[1]){
+    result=context.fn(...arguments[1])
+  }else{
+    result=context.fn()
+  }
+  delete context.fn;
+  return result;
 }
+
+
+// ES6写法
+Function.prototype.myApply = function (context, args) {
+  if (!context || context === null) {
+    context = window;
+  }
+
+  let fn = Symbol();
+  context[fn] = this;
+  return context[fn](...args);
+};
+
+
+let obj={
+  value:1
+}
+function fn(){
+  console.log(this.value);
+}
+
+fn.myApply(obj,[1,2]);
+
