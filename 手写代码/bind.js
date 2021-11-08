@@ -1,23 +1,23 @@
 // ES5实现
 // 总结：一个绑定函数也能使用new操作符创建对象：这种行为就像把原函数当成构造函数。提供的this值被忽略
 //      同时调用时的参数被提供给模拟函数
-// Function.prototype.myBind=function(){
-//   if(typeof this!=='function'){
-//     console.error('type error');
-//   }
+Function.prototype.myBind=function(){
+  if(typeof this!=='function'){
+    console.error('type error');
+  }
 
-//   var self=this;
-//   var args=Array.prototype.slice.call(arguments,1);
+  var self=this;
+  var args=Array.prototype.slice.call(arguments,1);
 
-//   var fn=function(){};
-//   var fBind=function(){
-//     var bindArgs=Array.prototype.slice.call(arguments);
-//     return self.apply(this instanceof fn?this:context,args.concat(bindArgs))
-//   }
-//   fn.prototype=this.prototype;
-//   fBind.prototype=new fn();
-//   return fBind;
-// }
+  var fn=function(){};
+  var fBind=function(){
+    var bindArgs=Array.prototype.slice.call(arguments);
+    return self.apply(this instanceof fn?this:context,args.concat(bindArgs))
+  }
+  fn.prototype=this.prototype;
+  fBind.prototype=new fn();
+  return fBind;
+}
 
 
 // ES6实现
