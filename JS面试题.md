@@ -503,8 +503,6 @@ event loop是异步回调实现的原理
 - 每次宏任务执行完毕后会进行GUI渲染线程的渲染，然后再执行下一个宏任务
 - 宏任务：script(整体代码)、setTimeout、setInterval、setImmediate、I/O、UI rendering
 - 宏任务的颗粒度大，不适合需要精简控制的任务
-- 
-
 - 宏任务：setTimeout，setInterval，Ajax，DOM事件
 - 微任务：Promise，async/await
 - 微任务执行时机比宏任务要早
