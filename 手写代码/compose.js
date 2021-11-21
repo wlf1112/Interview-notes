@@ -10,6 +10,12 @@
  *  2.回调函数第二次执行时，返回值为函数 (...args)=>f4(f3(f2(...args)))，作为下一次执行的参数
  *  3.回调函数第三次执行时，返回值为函数 (...args)=>f4(f3(f2(f1(...args))))
  * 最后右边的参数f1可以接受多个参数，然后返回结果给下一个函数f2，返回结果再传入f3,f3最先被调用，回等到f2的结果，再等待f1的结果
+ * 
+ * 补充知识点：
+ *  reduce的语法：arr.reduce(callback(accumulator,currentvalue,index,array,initialValue))
+ *               其中accumulator累计器累计回调的返回值，currentvalue是数组中正在处理的元素，
+ *               index数组中正在处理的当前元素的索引，array调用reduce的数组,
+ *               initialValue作为第一次调用callback函数时的第一个参数
  */
 function fn1(x){
     return x+1;

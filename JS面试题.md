@@ -101,6 +101,11 @@ console.log(a.call({}));                    //'[object Object]'
 - ES6 Array.isArray()
 - 通过instanceof
 - 通过Array.prototype.isPrototypeOf(obj)
+  - isPrototypeOf和instanceof的区别：
+  - isPrototypeOf()方法用于测试一个对象是否在另一个对象的原型链上
+  - instanceof用于检测构造函数的prototype属性是否出现在某个实例对象的原型链上
+  - 两者的不同在于：表达式'obj instanceof AFunction'中，obj的原型链是针对AFunction.protoype进行检查的，不是针对AFunction本身
+
 
 ### 值类型和引用类型
 
