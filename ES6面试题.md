@@ -56,28 +56,19 @@ Object.defineProperty()接收三个参数：
 对于const不可修改的特性，我们通过设置writable属性来实现：
 
 ```
-var _const=function _const(data,value){
-    window.data=value;// 把要定义的data挂载到window下，并赋值value
-    Object.defineProperty(window,data,{ // 利用Object.defineProperty劫持当前对象，并修改其属性描述符
-        enumerable:false,
-        configurable:false,
-        get:function(){
-            return value
-        },
-        set:function(data){
-            if(data!==value){
-                throw new TypeError('Assignment to constant variable');
-            }else{
-                return value;
-            }
-        }
+function _const(key,value){
+    Object.defineProperty(window,key,{
+        value,
+        writable:false
     })
 }
-
-_const('a',10);
-console.log(a);
-delete(a);
-console.log(a);
-a=20;
+_const('obj',{a:1});
+obj.b=2;
+obj={};// 不会报错，但是obj的值无法改变
 ```
 
+#### Object.assign和扩展运算符的区别
+
+Object.assign()方法接收的第一个参数作为目标对象，后面的所有参数作为源对象。然后把所有源对象合并到目标对象中。它会修改一个对象，因此会触发ES6 setter
+
+扩展运算符（...）使用它时，数组或对象中的每一个值都会被拷贝到一个新的数组或对象中。它不复制继承的属性或类的属性，但它会复制ES6的Symbol属性

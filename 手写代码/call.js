@@ -28,10 +28,12 @@ Function.prototype.myCall=function(context,...args){
   }
 
   // 创建唯一的key值，作为我们构造的context内部方法名
-  let fn=Symbol()
+  let fn=Symbol();
   // this指向调用call的函数
-  context[fn]=this
-  return context[fn](...args)
+  context[fn]=this;
+  let result=context[fn](...args);
+  delete context[fn];
+  return result;
 }
 
 let obj={

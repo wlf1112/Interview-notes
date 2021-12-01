@@ -1,6 +1,4 @@
 // ES5实现
-// 总结：一个绑定函数也能使用new操作符创建对象：这种行为就像把原函数当成构造函数。提供的this值被忽略
-//      同时调用时的参数被提供给模拟函数
 Function.prototype.myBind=function(){
   if(typeof this!=='function'){
     console.error('type error');

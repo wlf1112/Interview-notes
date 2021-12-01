@@ -26,7 +26,9 @@ Function.prototype.myApply = function (context, args) {
 
   let fn = Symbol();
   context[fn] = this;
-  return context[fn](...args);
+  let result=context[fn](...args);
+  delete context[fn];
+  return result;
 };
 
 
